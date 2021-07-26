@@ -1,0 +1,54 @@
+{
+  "name": "test-dynamodb-lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node -T src/start.ts",
+    "test": "jest",
+    "clean": "rm -rf ./dist && rm -rf ./build",
+    "build": "npm run esbuild",
+    "zip": "cd dist && zip -q -r lambda.zip lambda.js lambda.js.map",
+    "dist": "tsc && npm test && npm run build && npm run zip",
+    "esbuild": "esbuild --bundle --minify --keep-names --sourcemap --sources-content=false --target=node12 --platform=node --outfile=dist/lambda.js src/lambda.ts",
+    "deploy": "aws lambda update-function-code --function-name MyLambdaFunction --zip-file fileb://dist/lambda.zip",
+    "stack": "npm run dist && cd infrastructure && npm test && npx cdk deploy",
+    "prettier:base": "prettier --parser typescript --single-quote",
+    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
+    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts,tsx}\""
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.21.0",
+    "@aws-sdk/client-s3": "^3.21.0",
+    "@aws-sdk/client-sts": "^3.21.0",
+    "@aws-sdk/lib-dynamodb": "^3.21.0",
+    "@aws-sdk/node-http-handler": "^3.21.0",
+    "@aws-sdk/types": "^3.20.0",
+    "node-fetch": "^2.6",
+    "uuid": "^8.3.2",
+    "pdfmake": "^0.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@tsconfig/node12": "^1.0.7",
+    "@types/aws-lambda": "^8.10.68",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^12.12.47",
+    "@types/uuid": "^8.3.1",
+    "@types/pdfmake": "^0.1.18",
+    "babel-jest": "^27.0.2",
+    "babel-loader": "^8.1.0",
+    "esbuild": "^0.12.5",
+    "husky": "4.x",
+    "jest": "^27.0.4",
+    "prettier": "2.x",
+    "ts-node": "^10.0.0",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  }
+}

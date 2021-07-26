@@ -1,0 +1,16 @@
+{
+  "id": "2e070b7f-3fd3-49d0-9dc6-bf48a2fe67c1",
+  "name": "Test Artist",
+  "albums": [
+    {
+      "id": "c23dfc71-f4f4-4313-b219-2125309ad050",
+      "name": "Test Album",
+      "songs": [
+        {
+          "id": "89bdc70e-5ceb-4e9f-84cd-d98d7b5b5244",
+          "name": "Test Song"
+        }
+      ]
+    }
+  ]
+}
